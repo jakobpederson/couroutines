@@ -47,9 +47,9 @@ def terminate_coroutine(corot):
 
 
 @auto_prime
-def super_complicated_example():
-    first = complicated_example()
-    last = complicated_example()
+def super_complicated_example(c1, c2):
+    first = c1()
+    last = c2()
     while True:
         name = yield
         if name is None:

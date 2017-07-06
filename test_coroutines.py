@@ -36,9 +36,11 @@ class CoroutinesTest(unittest.TestCase):
         self.assertEqual(['10', '18', '15'], result)
 
     def test_super_complicated_example(self):
-        test_co = coroutines.super_complicated_example()
+        test_co = coroutines.super_complicated_example(coroutines.complicated_example, coroutines.print_number)
         test_co.send('Jakob Pederson')
         test_co.send('Caleb Salt')
         first, last = coroutines.terminate_coroutine(test_co)
         self.assertEqual(['Jakob', 'Caleb'], first)
         self.assertEqual(['Pederson', 'Salt'], last)
+        print(last)
+        self.fail('x')
