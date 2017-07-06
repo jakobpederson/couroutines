@@ -21,7 +21,7 @@ def print_number():
 
 
 @auto_prime
-def print_and_return_number():
+def print_and_yield_number():
     result = []
     while True:
         number = yield
@@ -33,7 +33,7 @@ def print_and_return_number():
 
 
 @auto_prime
-def complex_print(var):
+def multiply_number_by_var(var):
     while True:
         number = yield
         print(number * var)
@@ -47,7 +47,7 @@ def terminate_coroutine(corot):
 
 
 @auto_prime
-def super_complicated_example(c1, c2):
+def coroutine_to_coroutines(c1, c2):
     first = c1()
     last = c2()
     while True:
@@ -61,7 +61,7 @@ def super_complicated_example(c1, c2):
 
 
 @auto_prime
-def complicated_example():
+def get_list_of_names():
     result = []
     while True:
         name = yield

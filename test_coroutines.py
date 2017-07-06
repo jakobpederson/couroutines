@@ -7,38 +7,35 @@ import unittest
 class CoroutinesTest(unittest.TestCase):
 
     def test_print_number(self):
-        test_co = coroutines.print_number()
+        print_number = coroutines.print_number()
         for i in range(1, 6):
-            test_co.send(i)
-        try:
-            test_co.send(None)
-        except StopIteration as exc:
-            result = exc.value
+            print_number.send(i)
+        result = coroutines.terminate_coroutine(print_number)
         self.assertEqual([1, 2, 3, 4, 5], result)
 
-    def test_print_and_return_number(self):
-        test_co = coroutines.print_and_return_number()
+    def test_print_and_yield_number(self):
+        print_and_yield = coroutines.print_and_yield_number()
         for i in range(1, 6):
-            print(test_co.send(i))
-            next(test_co)
-        result = coroutines.terminate_coroutine(test_co)
+            print(print_and_yield.send(i))
+            next(print_and_yield)
+        result = coroutines.terminate_coroutine(print_and_yield)
         self.assertEqual([1, 2, 3, 4, 5], result)
 
-    def test_complex_print(self):
+    def test_multiply_number_by_var(self):
         out = StringIO()
         with redirect_stdout(out):
-            test_co = coroutines.complex_print(2)
-            test_co_5 = coroutines.complex_print(5)
-            test_co_5.send(2)
-            test_co.send(9)
-            test_co_5.send(3)
+            multiply_by_2 = coroutines.multiply_number_by_var(2)
+            multiply_by_5 = coroutines.multiply_number_by_var(5)
+            multiply_by_5.send(2)
+            multiply_by_2.send(9)
+            multiply_by_5.send(3)
         result = out.getvalue().strip().split('\n')
         self.assertEqual(['10', '18', '15'], result)
 
-    def test_super_complicated_example(self):
-        test_co = coroutines.super_complicated_example(coroutines.complicated_example, coroutines.print_number)
-        test_co.send('Jakob Pederson')
-        test_co.send('Caleb Salt')
-        first, last = coroutines.terminate_coroutine(test_co)
+    def test_coroutine_to_coroutines(self):
+        names = coroutines.coroutine_to_coroutines(coroutines.get_list_of_names, coroutines.print_number)
+        names.send('Jakob Pederson')
+        names.send('Caleb Salt')
+        first, last = coroutines.terminate_coroutine(names)
         self.assertEqual(['Jakob', 'Caleb'], first)
         self.assertEqual(['Pederson', 'Salt'], last)
