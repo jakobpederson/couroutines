@@ -1,5 +1,7 @@
-import unittest
+from contextlib import redirect_stdout
 import coroutines
+from io import StringIO
+import unittest
 
 
 class CoroutinesTest(unittest.TestCase):
@@ -23,8 +25,6 @@ class CoroutinesTest(unittest.TestCase):
         self.assertEqual([1, 2, 3, 4, 5], result)
 
     def test_complex_print(self):
-        from contextlib import redirect_stdout
-        from io import StringIO
         out = StringIO()
         with redirect_stdout(out):
             test_co = coroutines.complex_print(2)
@@ -42,5 +42,3 @@ class CoroutinesTest(unittest.TestCase):
         first, last = coroutines.terminate_coroutine(test_co)
         self.assertEqual(['Jakob', 'Caleb'], first)
         self.assertEqual(['Pederson', 'Salt'], last)
-        print(last)
-        self.fail('x')
